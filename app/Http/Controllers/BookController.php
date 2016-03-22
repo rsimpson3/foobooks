@@ -10,27 +10,33 @@ class BookController extends Controller {
     * Responds to requests to GET /books
     */
     public function getIndex() {
-        return 'List all the books';
+        return 'Here is the list of my books';
     }
 
     /**
      * Responds to requests to GET /books/show/{id}
      */
     public function getShow($id) {
-        return 'Show book: '.$id;
+        return 'Show an individual book: ' .$id;
     }
 
     /**
      * Responds to requests to GET /books/create
      */
     public function getCreate() {
-        return 'Form to create a new book';
+        $view  = '<form method="POST" >';
+        $view .= csrf_field();
+        $view .= 'Book title: <input type="text" name="title">';
+        $view .= '<input type="submit">';
+        $view .= '</form>';
+
+        return $view;
     }
 
     /**
      * Responds to requests to POST /books/create
      */
     public function postCreate() {
-        return 'Process adding new book';
+        return 'Add the book: '.$_POST['title'];
     }
 } #eoc
