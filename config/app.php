@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => env('APP_URL','http://foobooks.digitalbiolab.me'),
 
     /*
     |--------------------------------------------------------------------------
@@ -209,4 +209,4 @@ return [
 
     ],
 
-]; 
+];
