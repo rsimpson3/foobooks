@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class BookController extends Controller {
 
@@ -10,7 +11,7 @@ class BookController extends Controller {
     * Responds to requests to GET /books
     */
     public function getIndex() {
-        return 'Here is the list of my books';
+        return view('books.index');
     }
 
     /**
@@ -25,19 +26,18 @@ class BookController extends Controller {
      * Responds to requests to GET /books/create
      */
     public function getCreate() {
-        $view  = '<form method="POST" >';
-        $view .= csrf_field();
-        $view .= 'Book title: <input type="text" name="title">';
-        $view .= '<input type="submit">';
-        $view .= '</form>';
-
-        return $view;
+        return view('books.create');
     }
 
     /**
      * Responds to requests to POST /books/create
      */
-    public function postCreate() {
-        return 'Add the book: '.$_POST['title'];
-    }
+     public function postCreate(Request $request) {
+         $this->validate($request,[
+             'title' => 'required|min:3',
+             'author' => 'required'
+         ]);
+         return 'Add the book: '.$request->input('title');
+         #return redirect('/books');
+     }
 } #eoc

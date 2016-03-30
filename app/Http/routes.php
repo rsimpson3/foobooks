@@ -3,8 +3,7 @@
 Route::group(['middleware' => ['web']], function () {
 
     Route::get('/', function () {
-        #return view('welcome');
-        return 'Welcome to my first Laravel site.';
+        return view('welcome');
     });
 
     Route::get('/books', 'BookController@getIndex');
@@ -18,4 +17,9 @@ Route::group(['middleware' => ['web']], function () {
         echo '<br>app.env: ' .config('app.env');
         return '';
     });
+
+    # Restrict certain routes to only be viewable in the local environments
+    if(App::environment('local')) {
+        Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+    }
 });
