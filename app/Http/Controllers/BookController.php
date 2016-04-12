@@ -33,6 +33,7 @@ class BookController extends Controller {
      * Responds to requests to POST /books/create
      */
      public function postCreate(Request $request) {
+        //  dd($request);
          $this->validate($request,[
              'title' => 'required|min:3',
              'author' => 'required'
