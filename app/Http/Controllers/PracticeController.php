@@ -10,6 +10,116 @@ use Illuminate\Http\Request;
 class PracticeController extends Controller
 {
 
+    # Delete - Remove any books by the author “J.K. Rowling”.
+    public function getEx15() {
+        # First get books to delete
+        $books = \App\Book::where('author', 'LIKE', 'J.K. Rowling')->get();
+
+        # If we found the book, delete it
+        if($books) {
+
+            # Goodbye!
+            foreach ($books as $book) {
+               $book->delete();
+            }
+
+            return "Deletion complete; check the database to see if it worked...";
+
+        }
+        else {
+            return "Can't delete - Book not found.";
+        }
+
+    }
+
+
+    #Find any books by the author Bell Hooks and update the author name to be bell hooks (lowercase).
+    public function getEx14() {
+        # First get a book to update
+        $book = \App\Book::where('author', '=', 'Bell Hooks')->first();
+
+        # If we found the book, update it
+        if($book) {
+
+            # Change author to lowercase
+            $book->author = 'bell hooks';
+
+            # Save the changes
+            $book->save();
+
+            echo "Update complete; check the database to see if your update worked...";
+        }
+        else {
+            echo "Book not found, can't update.";
+        }
+
+    }
+
+    # Insert - Eloquent Model invoked
+    public function getEx13() {
+
+        # Create - Instantiate a new Book Model object
+        $book = new \App\Book();
+
+        # Set the parameters
+        # Note how each parameter corresponds to a field in the table
+        $book->title = 'Teaching Critical Thinking';
+        $book->author = 'Bell Hooks';
+        $book->published = 2010;
+        $book->cover = 'http://ecx.images-amazon.com/images/I/31zPQUCIQ8L._SX332_BO1,204,203,200_.jpg';
+        $book->purchase_link = 'http://www.amazon.com/Teaching-Critical-Thinking-Practical-Wisdom/dp/0415968208/ref=asap_bc?ie=UTF8';
+
+        # Invoke the Eloquent save() method
+        # This will generate a new row in the `books` table, with the above data
+        $book->save();
+
+        echo 'Added: '.$book->title;
+
+    }
+
+    #Retrieve all the books in descending order according to published date.
+    public function getEx12() {
+        $books = \App\Book::orderBy('published', 'desc')->get();
+
+        foreach($books as $book) {
+            echo $book->title. ' - '. $book->published. '<br>';
+        }
+
+    }
+
+    #Retrieve all the books in alphabetical order by title.
+    public function getEx11() {
+        $books = \App\Book::orderBy('title', 'asc')->get();
+
+        foreach($books as $book) {
+            echo $book->title. '<br>';
+        }
+
+    }
+
+    #Retrieve all the books published after 1950.
+    public function getEx10() {
+
+        $books = \App\Book::where('published', '>', '1950')->get();
+
+        foreach($books as $book) {
+            echo $book->title. '<br>';
+        }
+
+    }
+
+    # Show the last 5 books that were added to the books table.
+    public function getEx9() {
+
+        # Sort books by descending id, select 5
+        $books = \App\Book::orderBy('id', 'desc')->get()->take(5);
+
+        foreach($books as $book) {
+            echo $book->title. '<br>';
+        }
+
+    }
+
     # Delete
     public function getEx7() {
         # First get a book to delete
@@ -27,7 +137,7 @@ class PracticeController extends Controller
         else {
             return "Can't delete - Book not found.";
         }
-        
+
     }
 
     # updated
