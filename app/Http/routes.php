@@ -1,7 +1,5 @@
 <?php
 
-
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -17,6 +15,16 @@ Route::get('/practice',function() {
     echo '<br>app.env: ' .config('app.env');
     return '';
 });
+
+# Practice Routes for testing books mysql dbase - lecture 10 Part4
+Route::get('/practice/ex1', 'PracticeController@getEx1');
+Route::get('/practice/ex2', 'PracticeController@getEx2');
+Route::get('/practice/ex3', 'PracticeController@getEx3');
+Route::get('/practice/ex4', 'PracticeController@getEx4');
+Route::get('/practice/ex5', 'PracticeController@getEx5');
+Route::get('/practice/ex6', 'PracticeController@getEx6');
+Route::get('/practice/ex7', 'PracticeController@getEx7');
+Route::get('/practice/ex7', 'PracticeController@getEx7');
 
 # Restrict certain routes to only be viewable in the local environments
 if(App::environment('local')) {
@@ -41,7 +49,7 @@ Route::get('/debug', function() {
     When you're done debugging, comment it back out so you don't accidentally leave it
     running on your live server, making your credentials public.
     */
-    print_r(config('database.connections.mysql'));
+    // print_r(config('database.connections.mysql'));
 
     echo '<h1>Test Database Connection</h1>';
     try {
@@ -57,6 +65,8 @@ Route::get('/debug', function() {
     echo '</pre>';
 
 });
+
+
 
 if(App::environment('local')) {
 
