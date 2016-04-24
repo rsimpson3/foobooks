@@ -38,6 +38,9 @@ Route::get('/practice/ex13', 'PracticeController@getEx13');
 Route::get('/practice/ex14', 'PracticeController@getEx14');
 Route::get('/practice/ex15', 'PracticeController@getEx15');
 Route::get('/practice/ex16', 'PracticeController@getEx16');
+Route::get('/practice/ex17', 'PracticeController@getEx17');
+Route::get('/practice/ex18', 'PracticeController@getEx18');
+Route::get('/practice/ex19', 'PracticeController@getEx19');
 
 # Restrict certain routes to only be viewable in the local environments
 if(App::environment('local')) {

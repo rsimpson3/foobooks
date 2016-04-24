@@ -10,6 +10,47 @@ use Illuminate\Http\Request;
 class PracticeController extends Controller
 {
 
+    public function getEx19() {
+
+        $author = new \App\Author;
+        $author->first_name = 'J.K';
+        $author->last_name = 'Rowling';
+        $author->bio_url = 'https://en.wikipedia.org/wiki/J._K._Rowling';
+        $author->birth_year = '1965';
+        $author->save();
+        dump($author->toArray());
+
+        $book = new \App\Book;
+        $book->title = "Harry Potter and the Philosopher's Stone";
+        $book->published = 1997;
+        $book->cover = 'http://prodimage.images-bn.com/pimages/9781582348254_p0_v1_s118x184.jpg';
+        $book->purchase_link = 'http://www.barnesandnoble.com/w/harrius-potter-et-philosophi-lapis-j-k-rowling/1102662272?ean=9781582348254';
+        $book->author()->associate($author); # <--- Associate the author with this book
+        $book->save();
+        dump($book->toArray()); 
+
+    }
+
+    public function getEx18() {
+
+        # eager loading
+        $books = \App\Book::with('author')->get();
+
+        foreach ($books as $book) {
+
+            echo $book->author->first_name.'<br>';
+
+        }
+
+    }
+
+    public function getEx17() {
+
+        $book = \App\Book::find(1);
+        # dynamic properties
+        dump($book->author->last_name);
+    }
+
     public function getEx16() {
         # collection object
         $books = \App\Book::where('published', '>',1925)->get();
