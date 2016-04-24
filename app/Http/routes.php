@@ -1,12 +1,17 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+# ----------------------------------------
+# Book specific Routes
+# ----------------------------------------
+Route::get('/', 'BookController@getIndex');
 Route::get('/books', 'BookController@getIndex');
+
+Route::get('book/edit/{id?}','BookController@getEdit');
+Route::post('book/edit','BookController@postEdit');
+
 Route::get('/book/create', 'BookController@getCreate');
 Route::post('/book/create', 'BookController@postCreate');
+
 Route::get('/book/show/{title?}', 'BookController@getShow');
 
 Route::get('/practice',function() {
@@ -32,6 +37,7 @@ Route::get('/practice/ex12', 'PracticeController@getEx12');
 Route::get('/practice/ex13', 'PracticeController@getEx13');
 Route::get('/practice/ex14', 'PracticeController@getEx14');
 Route::get('/practice/ex15', 'PracticeController@getEx15');
+Route::get('/practice/ex16', 'PracticeController@getEx16');
 
 # Restrict certain routes to only be viewable in the local environments
 if(App::environment('local')) {

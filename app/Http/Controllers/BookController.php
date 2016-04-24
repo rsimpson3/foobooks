@@ -11,7 +11,12 @@ class BookController extends Controller {
     * Responds to requests to GET /books
     */
     public function getIndex() {
-        return view('books.index');
+
+        # query dbase to list all books
+        $books = \App\Book::orderBy('id','desc')->get();
+
+        # pass collection to view
+        return view('books.index')->with('books',$books);
     }
 
     /**
@@ -36,9 +41,61 @@ class BookController extends Controller {
         //  dd($request);
          $this->validate($request,[
              'title' => 'required|min:3',
-             'author' => 'required'
+             'author' => 'required',
+             'published' => 'required|min:4|max:4',
+             'cover' => 'required|url',
+             'purchase_link' => 'required|url',
          ]);
-         return 'Add the book: '.$request->input('title');
-         #return redirect('/books');
+
+         # Add the book to the dbase
+        //  $book = new \App\Book();
+        //  $book->title = $request->title;
+        //  $book->author = $request->author;
+        //  $book->published = $request->published;
+        //  $book->cover = $request->cover;
+        //  $book->purchase_link = $request->purchase_link;
+        //  $book->save();
+
+        # Mass Assignment 1
+        $data = $request->only('title','author','published','cover','purchase_link');
+        $book = new \App\Book($data);
+        $book->save();
+
+        # Mass Assignment 2
+        // \App\Book::create($data);
+
+         \Session::flash('message','Your book was added');
+
+         # don't leave user on post route
+        //  return 'Add the book: '.$request->title;
+
+        return redirect('/books');
+
      }
+
+     public function getEdit($id) {
+
+         $book = \App\Book::find($id);
+
+         return view('books.edit')->with('book', $book);
+
+     }
+
+     public function postEdit(Request $request) {
+
+         $book = \App\Book::find($request->id);
+
+         $book->title = $request->title;
+         $book->author = $request->author;
+         $book->cover = $request->cover;
+         $book->published = $request->published;
+         $book->purchase_link = $request->purchase_link;
+
+         $book->save();
+
+         \Session::flash('message', 'Your changes were saved.');
+         return redirect('book/edit/'.$request->id);
+
+     }
+
 } #eoc

@@ -1,14 +1,16 @@
 @extends('layouts.master')
 
 @section('title')
-    Add a new book
+    Edit book {{ $book->title}}
 @stop
 
 @section('content')
 
-    <h1>Add a new book</h1>
+    <h1>Edit book {{ $book->title}}</h1>
 
-    <form method='POST' action='/book/create'>
+    <form method='POST' action='/book/edit'>
+
+        <input type='hidden'  name='id'  value='{{$book->id}}'>
 
         {{ csrf_field() }}
 
@@ -18,7 +20,7 @@
                type='text'
                id='title'
                name='title'
-               value='{{ old('title', 'The Lorax') }}'
+               value='{{ $book->title }}'
            >
            <div class='error'>{{ $errors->first('title') }}</div>
         </div>
@@ -29,7 +31,7 @@
                type='text'
                id='author'
                name='author'
-               value='{{ old('author', 'Dr. Seuss') }}'
+               value='{{ $book->author }}'
            >
            <div class='error'>{{ $errors->first('author') }}</div>
         </div>
@@ -40,7 +42,7 @@
                type='text'
                id='published'
                name='published'
-               value='{{ old('published','1971') }}'
+               value='{{ $book->published }}'
            >
            <div class='error'>{{ $errors->first('published') }}</div>
         </div>
@@ -51,7 +53,7 @@
                type='text'
                id='cover'
                name='cover'
-               value='{{ old('cover','http://prodimage.images-bn.com/pimages/9780394823379_p0_v3_s192x300.jpg') }}'
+               value='{{ $book->cover }}'
            >
            <div class='error'>{{ $errors->first('cover') }}</div>
         </div>
@@ -62,24 +64,17 @@
                type='text'
                id='purchase_link'
                name='purchase_link'
-               value='{{ old('purchase_link','http://www.barnesandnoble.com/w/lorax-dr-seuss/1101109833') }}'
+               value='{{ $book->purchase_link }}'
            >
            <div class='error'>{{ $errors->first('purchase_link') }}</div>
         </div>
 
         <div class='form-instructions'>
-            All fields are required. 
+            All fields are required.
         </div>
 
-        <button type="submit" class="btn btn-primary">Add book</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
 
-        {{--
-        <ul class=''>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        --}}
 
         <div class='error'>
             @if(count($errors) > 0)

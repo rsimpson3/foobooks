@@ -22,6 +22,11 @@
 </head>
 <body>
 
+    <!-- reusable flash message  -->
+    @if(Session::get('message') != null)
+        <div class='flash_message'> {{ Session::get('message') }} </div>
+    @endif
+
     <header>
         <!-- logo links to homepage -->
         <a href='/'>

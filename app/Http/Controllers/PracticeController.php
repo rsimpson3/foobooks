@@ -10,6 +10,19 @@ use Illuminate\Http\Request;
 class PracticeController extends Controller
 {
 
+    public function getEx16() {
+        # collection object
+        $books = \App\Book::where('published', '>',1925)->get();
+
+        return view('practice.index')->with('books',$books);
+
+        // foreach($books as $book) {
+        //     echo '<div> <img src="'.$book['cover'].'"</div>';
+        // }
+        // dump($books->toArray());
+
+    }
+
     # Delete - Remove any books by the author “J.K. Rowling”.
     public function getEx15() {
         # First get books to delete
