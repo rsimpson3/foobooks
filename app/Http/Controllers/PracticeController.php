@@ -10,6 +10,34 @@ use Illuminate\Http\Request;
 class PracticeController extends Controller
 {
 
+    public function getEx21() {
+
+        # no constraint - gets all tags
+        $books = \App\Book::with('tags')->get();
+
+        foreach ($books as $book) {
+            echo $book->title.'<br>';
+            foreach($book->tags as $tag) {
+                echo $tag->name.'<br>';
+            }
+            echo '<br>';
+        }
+
+    }
+
+    public function getEx20(){
+
+        $book = \App\Book::where('title', '=', 'The Great Gatsby')->first();
+
+        # invoke tags method
+        dump($book->tags);
+
+        # no eager loading - extra query needed
+        foreach($book->tags as $tag) {
+            echo $tag->name.'<Br>';
+        }
+    }
+
     public function getEx19() {
 
         $author = new \App\Author;
@@ -27,7 +55,7 @@ class PracticeController extends Controller
         $book->purchase_link = 'http://www.barnesandnoble.com/w/harrius-potter-et-philosophi-lapis-j-k-rowling/1102662272?ean=9781582348254';
         $book->author()->associate($author); # <--- Associate the author with this book
         $book->save();
-        dump($book->toArray()); 
+        dump($book->toArray());
 
     }
 

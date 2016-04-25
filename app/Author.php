@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Author extends Model
 {
-    public function book() {
+    public function books() {
 
         # relationship to book
         # each author has many books

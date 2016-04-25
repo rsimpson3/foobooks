@@ -13,6 +13,10 @@ class Book extends Model
 
         # each book belongs to 1 author
         return $this->belongsTo('\App\Author');
+    }
 
+    public function tags() {
+        # force update to timestamps
+        return $this->belongsToMany('\App\Tag')->withTimestamps();
     }
 }
