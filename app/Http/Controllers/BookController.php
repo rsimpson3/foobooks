@@ -12,8 +12,12 @@ class BookController extends Controller {
     */
     public function getIndex() {
 
-        # query dbase to list all books
-        $books = \App\Book::orderBy('id','desc')->get();
+        // # query dbase to list all books
+        // # eager load author
+        // $books = \App\Book::with('author')->orderBy('id','desc')->get();
+
+        # logic moved to Book model
+        $books = \App\Book::getAllBooksWithAuthors();
 
         # pass collection to view
         return view('books.index')->with('books',$books);
@@ -31,7 +35,10 @@ class BookController extends Controller {
      * Responds to requests to GET /books/create
      */
     public function getCreate() {
-        return view('books.create');
+
+        $authors_for_dropdown = \App\Author::authorsForDropdown();
+
+        return view('books.create')->with('authors_for_dropdown', $authors_for_dropdown);
     }
 
     /**
@@ -75,9 +82,47 @@ class BookController extends Controller {
 
      public function getEdit($id) {
 
-         $book = \App\Book::find($id);
+         # L12 add eager loading for tags
+         $book = \App\Book::with('tags')->find($id);
 
-         return view('books.edit')->with('book', $book);
+
+         $authors_for_dropdown = \App\Author::authorsForDropdown();
+
+         $tags_for_checkboxes = \App\Tag::getTagsForCheckboxes();
+
+         $tags_for_this_book = [];
+         foreach ($book->tags as $tag) {
+             $tags_for_this_book[] = $tag->id;
+         }
+
+        //  dump($tags_for_this_book);
+
+        //  dump($tags_for_checkboxes);
+
+        //  # Get all authors
+        //  $authors = \App\Author::orderBy('last_name','asc')->get();
+        //
+        //  # Build array for authors dropdown
+        //  $authors_for_dropdown = [];
+        //
+        //  # key = author_id
+        //  # values = last_name, first_name
+        //
+        //  foreach ($authors as $author) {
+        //
+        //      $authors_for_dropdown[$author->id] = $author->last_name.', '.$author->first_name;
+        //  }
+        //  # dump($authors->toArray());
+        //
+        //  # test authors in array
+        // //  dump ($authors_for_dropdown);
+
+         # pass authors_for_dropdown to view
+         return view('books.edit')
+            ->with('book', $book)
+            ->with('authors_for_dropdown', $authors_for_dropdown)
+            ->with('tags_for_checkboxes', $tags_for_checkboxes)
+            ->with('tags_for_this_book', $tags_for_this_book);
 
      }
 
@@ -85,11 +130,26 @@ class BookController extends Controller {
 
          $book = \App\Book::find($request->id);
 
+         # dump($request->tags);
+
          $book->title = $request->title;
-         $book->author = $request->author;
+         $book->author_id = $request->author_id;
          $book->cover = $request->cover;
          $book->published = $request->published;
          $book->purchase_link = $request->purchase_link;
+
+         # pass empty array if all tags unchecked, deletes relationships
+         if ($request->tags) {
+             $tags = $request->tags;
+         }
+         else {
+             $tags = [];
+         }
+
+         $book->tags()->sync($tags);
+
+        # breaks if no tags checked
+        //  $book->tags()->sync($request->tags);
 
          $book->save();
 

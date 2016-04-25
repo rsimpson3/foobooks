@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(BooksTableSeeder::class);
         # Tags & Books need to be created first
         $this->call(BookTagTableSeeder::class);
+        # required dwa users 
+        $this->call(UsersTableSeeder::class);
 
     }
 }
