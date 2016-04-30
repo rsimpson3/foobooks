@@ -75,20 +75,20 @@
         </div>
 
         <div class='form-group'>
-
-            <!-- <label>Tags</label> -->
-
-            @foreach($tags_for_checkboxes as $tag_id => $tag_name)
-                <input
-                    type='checkbox'
-                    value='{{$tag_id}}'
-                    name='tags[]'
-                    {{ (in_array($tag_id,$tags_for_this_book)) ? 'CHECKED' : ''}}
-                >
-                {{$tag_name}} <br>
-
-            @endforeach
-
+            <fieldset>
+                <legend>Tags:</legend>
+                @foreach($tags_for_checkboxes as $tag_id => $tag_name)
+                    <label>
+                    <input
+                        type='checkbox'
+                        value='{{ $tag_id }}'
+                        name='tags[]'
+                        {{ (in_array($tag_id,$tags_for_this_book)) ? 'CHECKED' : '' }}
+                    >
+                    {{$tag_name}}
+                    </label>
+                @endforeach
+            </fieldset>
         </div>
 
         <div class='form-instructions'>

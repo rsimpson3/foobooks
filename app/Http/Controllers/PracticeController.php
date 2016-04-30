@@ -13,6 +13,7 @@ class PracticeController extends Controller
     public function getEx21() {
 
         # no constraint - gets all tags
+        # eager loading of tags
         $books = \App\Book::with('tags')->get();
 
         foreach ($books as $book) {

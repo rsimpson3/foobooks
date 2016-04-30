@@ -80,9 +80,11 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     # override AuthenticateUsers.php found in Laravel framework
     public function logout()
     {
-        # backslash moves inton global namespace
+        # backslash moves into global namespace
         \Auth::guard($this->getGuard())->logout();
 
         \Session::flash('message', 'You have been logged out.');

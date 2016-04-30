@@ -36,6 +36,11 @@ class BookController extends Controller {
      */
     public function getCreate() {
 
+        // if(!\Auth::check()) {
+        //     \Session::flash('message', 'You need to log in to create a new book.');
+        //     return redirect('/');
+        // }
+
         $authors_for_dropdown = \App\Author::authorsForDropdown();
 
         return view('books.create')->with('authors_for_dropdown', $authors_for_dropdown);

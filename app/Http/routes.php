@@ -37,11 +37,16 @@ Route::get('/show-login-status', function() {
 Route::get('/', 'BookController@getIndex');
 Route::get('/books', 'BookController@getIndex');
 
-Route::get('book/edit/{id?}','BookController@getEdit');
-Route::post('book/edit','BookController@postEdit');
+# Group routes under auth method - uses array
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('book/edit/{id?}','BookController@getEdit');
+    Route::post('book/edit','BookController@postEdit');
 
-Route::get('/book/create', 'BookController@getCreate');
-Route::post('/book/create', 'BookController@postCreate');
+    Route::get('/book/create', 'BookController@getCreate');
+    Route::post('/book/create', 'BookController@postCreate');
+
+});
+
 
 Route::get('/book/show/{title?}', 'BookController@getShow');
 
