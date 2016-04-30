@@ -79,6 +79,9 @@ Route::get('/practice/ex18', 'PracticeController@getEx18');
 Route::get('/practice/ex19', 'PracticeController@getEx19');
 Route::get('/practice/ex20', 'PracticeController@getEx20');
 Route::get('/practice/ex21', 'PracticeController@getEx21');
+# mail
+Route::get('/practice/ex22', 'PracticeController@getEx22');
+Route::get('/practice/ex23', 'PracticeController@getEx23');
 
 # Restrict certain routes to only be viewable in the local environments
 if(App::environment('local')) {

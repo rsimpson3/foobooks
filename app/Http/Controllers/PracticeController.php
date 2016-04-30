@@ -10,6 +10,49 @@ use Illuminate\Http\Request;
 class PracticeController extends Controller
 {
 
+    public function getEx23() {
+
+        # Get the current logged in user
+        $user = \Auth::user();
+
+        # If user is not logged in, make them log in
+        if(!$user) return redirect()->guest('login');
+
+        # Grab any book, just to use as an example
+        $book = \App\Book::findOrFail(1);
+
+        # Create an array of data, which will be passed/available in the view
+        $data = array(
+            'user' => $user,
+            'book' => $book,
+        );
+
+        \Mail::send('emails.book-available', $data, function($message) use ($user,$book) {
+
+            $recipient_email = $user->email;
+            $recipient_name  = $user->name;
+            $subject  = 'The book '.$book->title.' is now available on Foobooks';
+
+            $message->to($recipient_email, $recipient_name)->subject($subject);
+
+        });
+
+        echo 'HTML email sent.';
+
+    }
+
+    public function getEx22() {
+
+        \Mail::send([], [], function ($message) {
+          $message->to('robert_simpson@hms.harvard.edu')
+            ->subject('Hello World')
+            ->setBody('This is a test message; Testing 123.');
+        });
+
+        return 'Basic, plain text email sent.';
+
+    }
+
     public function getEx21() {
 
         # no constraint - gets all tags
