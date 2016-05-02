@@ -83,6 +83,10 @@ Route::get('/practice/ex21', 'PracticeController@getEx21');
 Route::get('/practice/ex22', 'PracticeController@getEx22');
 Route::get('/practice/ex23', 'PracticeController@getEx23');
 
+# API
+Route::get('/practice/ex24', 'PracticeController@getEx24');
+Route::get('/practice/ex25', 'PracticeController@getEx25');
+
 # Restrict certain routes to only be viewable in the local environments
 if(App::environment('local')) {
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

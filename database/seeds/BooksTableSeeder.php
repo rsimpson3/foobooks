@@ -55,7 +55,7 @@ class BooksTableSeeder extends Seeder
            # 'author' => 'Frank Herbert',
            'author_id' => $author_id,
            'published' => 1965,
-           'cover' => 'http://prodimage.images-bn.com/pimages/9780441172719_p0_v1_s192x300.jpg',
+           'cover' => 'http://www.amazon.com/Dune-Frank-Herbert/dp/0441172717/ref=sr_1_1?s=books&ie=UTF8&qid=1462138619&sr=1-1&keywords=dune+by+frank+herbert',
            'purchase_link' => 'http://www.barnesandnoble.com/w/dune-frank-herbert/1100608835?ean=9780441172719',
        ]);
     }

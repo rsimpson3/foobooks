@@ -10,6 +10,55 @@ use Illuminate\Http\Request;
 class PracticeController extends Controller
 {
 
+    public function getEx25() {
+
+        # Instantiate a new object from the library we're using
+        $client = new \Google_Client();
+
+        # Put the name of your application here
+        $client->setApplicationName("Foobooks");
+
+        # Paste in your API Key
+        $client->setDeveloperKey(\Config::get('apis.google.api_key'));
+
+        # This library can work with multiple different Google APIs, so here we're specifying we're using the Books API
+        $service = new \Google_Service_Books($client);
+
+        # Create an array of params for the query; these are the same params we used in the basic example above
+        $optParams = [
+            'q' => 'author:Maya Angelou',
+            'maxResults' => 5,
+        ];
+
+        # Each API provides resources and methods, usually in a chain. These can be accessed from the service object in the form $service->resource->method(args)
+        $books = $service->volumes->listVolumes('', $optParams);
+
+        # Output our results to test and make sure it worked
+        dump($books);
+
+        foreach($books['items'] as $book) {
+            echo $book['volumeInfo']['title'].'<br>';
+        }
+
+    }
+
+    public function getEx24() {
+
+        $apiUrl = "https://www.googleapis.com/books/v1/volumes?q=author:maya%20angelou&langRestrict=en&maxResults=5&key=AIzaSyAuSWKAk2iFAK-uzg-RKCS6L5spPjc46VM";
+        $jsonStringResults = file_get_contents($apiUrl);
+
+        $data = json_decode($jsonStringResults, true);
+
+        # Show all the data
+        dump($data);
+
+        # Loop through the data printing just the title for each book
+        foreach($data['items'] as $book) {
+            echo $book['volumeInfo']['title'].'<br>';
+        }
+
+    }
+
     public function getEx23() {
 
         # Get the current logged in user

@@ -12,16 +12,27 @@
 
     <h1>All the books</h1>
 
-    @foreach($books as $book)
-        <section class='book'>
-            <h2>{{ $book->title }}</h2>
+    @if(sizeof($books) == 0)
+        You have not added any books, you can <a href='/book/create'>add a book now to get started</a>.
+    @else
+        @foreach($books as $book)
+        <div id='books' class='cf'>
+            <section class='book'>
 
-            <h3>{{ $book->author->first_name }} {{ $book->author->last_name }}</h3>
+                    <a href='/book/show/{{$book->id}}'><h2 class='truncate'>{{ $book->title }}</h2></a>
 
-            <img src='{{ $book->cover }}' alt='Cover for {{$book->title}}'>
+                    <h3 class='truncate'>{{ $book->author->first_name }} {{ $book->author->last_name }}</h3>
 
-            <br><a href='/book/edit/{{$book->id}}'>Edit</a>
-        </section>
-    @endforeach
+                    <img class='cover' src='{{ $book->cover }}' alt='Cover for {{$book->title}}'>
+
+                    <div class='tags'>
+                        @foreach($book->tags as $tag)
+                            <div class='tag'>{{ $tag->name }}</div>
+                        @endforeach
+                    </div>
+            </section>
+        @endforeach
+        </div>
+    @endif
 
 @stop

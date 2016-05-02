@@ -26,9 +26,27 @@ class BookController extends Controller {
     /**
      * Responds to requests to GET /books/show/{id}
      */
-    public function getShow($title = null) {
-        return view('books.show')->with('title',$title);
-        #return 'Show an individual book: ' .$title;
+    public function getShow($id = null) {
+
+        # book collection
+        $book = \App\Book::findOrFail($id);
+
+        # create instance from new class
+        $googleBooks = new \App\Libraries\GoogleBooks();
+
+        # concatenate book author
+        $author_name = $book->author->first_name.' ' .$book->author->last_name;
+
+        $otherBooksByThisAuthor = $googleBooks->getOtherBooksByAuthor($author_name);
+
+        # test GoogleBooks class working
+        // dump($otherBooksByThisAuthor);
+
+        return view('books.show',[
+            'book' => $book,
+            'otherBooksByThisAuthor' => $otherBooksByThisAuthor
+        ]);
+
     }
 
     /**
