@@ -29,7 +29,15 @@ class BookController extends Controller {
     public function getShow($id = null) {
 
         # book collection
-        $book = \App\Book::findOrFail($id);
+        // $book = \App\Book::findOrFail($id);
+
+        $book = \App\Book::find($id);
+
+        # if book id not found
+        if(is_null($book)) {
+            \Session::flash('message','Book not found');
+            return redirect('/books');
+        }
 
         # create instance from new class
         $googleBooks = new \App\Libraries\GoogleBooks();
@@ -60,8 +68,12 @@ class BookController extends Controller {
         // }
 
         $authors_for_dropdown = \App\Author::authorsForDropdown();
+        $tags_for_checkboxes = \App\Tag::getTagsForCheckboxes();
 
-        return view('books.create')->with('authors_for_dropdown', $authors_for_dropdown);
+        return view('books.create')->with([
+            'authors_for_dropdown' => $authors_for_dropdown,
+            'tags_for_checkboxes' => $tags_for_checkboxes,
+        ]);
     }
 
     /**
@@ -69,13 +81,18 @@ class BookController extends Controller {
      */
      public function postCreate(Request $request) {
         //  dd($request);
+
+        $messages = [
+            'not_in' => 'You have to choose an author.',
+        ];
+
          $this->validate($request,[
              'title' => 'required|min:3',
-             'author' => 'required',
+             'author_id' => 'not_in:0',
              'published' => 'required|min:4|max:4',
              'cover' => 'required|url',
-             'purchase_link' => 'required|url',
-         ]);
+             'purchase_link' => 'required|url'
+         ], $messages);
 
          # Add the book to the dbase
         //  $book = new \App\Book();
@@ -88,6 +105,10 @@ class BookController extends Controller {
 
         # Mass Assignment 1
         $data = $request->only('title','author','published','cover','purchase_link');
+
+        # append user_id to assign new book to that user
+        $data['user_id'] = \Auth::id();
+
         $book = new \App\Book($data);
         $book->save();
 
@@ -180,5 +201,37 @@ class BookController extends Controller {
          return redirect('book/edit/'.$request->id);
 
      }
+
+     public function getConfirmDelete($id = null) {
+
+         $book = \App\Book::find($id);
+
+         return view('books.delete')->with('book', $book);
+
+     }
+
+     public function getDelete($id = null) {
+
+         # Get the book to be deleted
+       $book = \App\Book::find($id);
+
+       if(is_null($book)) {
+           \Session::flash('message','Book not found.');
+           return redirect('/books');
+       }
+
+       # First remove any tags associated with this book
+       if($book->tags()) {
+           $book->tags()->detach();
+       }
+
+       # Then delete the book
+       $book->delete();
+
+       # Done
+       \Session::flash('message',$book->title.' was deleted.');
+       return redirect('/books');
+
+    }
 
 } #eoc

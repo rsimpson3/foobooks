@@ -42,13 +42,13 @@
             <li><a href='/books'>View all books</a></li>
             @if (Auth::check())
                 <li><a href='/book/create'>Add a new book</a></li>
-                <li><a href='/logout'>Logout</a></li>
+                <li><a href='/logout'>Logout {{ $user->name }} </a></li>
 
             <!-- Logged out navigation  -->
             @else
                 <li><a href='/login'>Login</a></li>
                 <li><a href='/register'>Register</a></li>
-            @endif 
+            @endif
         </ul>
     </nav>
 

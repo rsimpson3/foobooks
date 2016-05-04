@@ -24,6 +24,7 @@
     </div>
 
      <a href='/book/edit/{{$book->id}}'><i class='fa fa-pencil'></i> Edit</a><br>
+     <a href='/book/confirm-delete/{{$book->id}}'><i class='fa fa-trash'></i> Delete</a><br>
 
      <h3>Other books by {{ $book->author->first_name }} {{ $book->author->last_name }}</h3>
      @foreach($otherBooksByThisAuthor as $otherBook)

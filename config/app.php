@@ -159,6 +159,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
+        'App\Providers\ComposerServiceProvider'
+
     ],
 
     /*

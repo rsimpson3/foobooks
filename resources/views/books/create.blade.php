@@ -18,20 +18,21 @@
                type='text'
                id='title'
                name='title'
-               value='{{ old('title', 'The Lorax') }}'
+               value='{{ old('title') }}'
            >
            <div class='error'>{{ $errors->first('title') }}</div>
         </div>
 
         <div class='form-group'>
-           <label>Author:</label>
-           <input
-               type='text'
-               id='author'
-               name='author'
-               value='{{ old('author', 'Dr. Seuss') }}'
-           >
-           <div class='error'>{{ $errors->first('author') }}</div>
+            <label for='author_id'>Author:</label>
+            <select name='author_id' id='author_id'>
+                @foreach($authors_for_dropdown as $author_id => $author_name)
+                     <option value='{{$author_id}}'>
+                         {{$author_name}}
+                     </option>
+                 @endforeach
+            </select>
+            <div class='error'>{{ $errors->first('author_id') }}</div>
         </div>
 
         <div class='form-group'>
@@ -40,7 +41,7 @@
                type='text'
                id='published'
                name='published'
-               value='{{ old('published','1971') }}'
+               value='{{ old('published') }}'
            >
            <div class='error'>{{ $errors->first('published') }}</div>
         </div>
@@ -51,7 +52,7 @@
                type='text'
                id='cover'
                name='cover'
-               value='{{ old('cover','http://prodimage.images-bn.com/pimages/9780394823379_p0_v3_s192x300.jpg') }}'
+               value='{{ old('cover') }}'
            >
            <div class='error'>{{ $errors->first('cover') }}</div>
         </div>
@@ -62,13 +63,29 @@
                type='text'
                id='purchase_link'
                name='purchase_link'
-               value='{{ old('purchase_link','http://www.barnesandnoble.com/w/lorax-dr-seuss/1101109833') }}'
+               value='{{ old('purchase_link') }}'
            >
            <div class='error'>{{ $errors->first('purchase_link') }}</div>
         </div>
 
+        <div class='form-group'>
+            <fieldset>
+                <legend>Tags:</legend>
+                @foreach($tags_for_checkboxes as $tag_id => $tag_name)
+                    <label>
+                        <input
+                            type='checkbox'
+                            value='{{ $tag_id }}'
+                            name='tags[]'
+                        >
+                        {{$tag_name}}
+                    </label>
+                @endforeach
+            </fieldset>
+        </div>
+        
         <div class='form-instructions'>
-            All fields are required. 
+            All fields are required.
         </div>
 
         <button type="submit" class="btn btn-primary">Add book</button>

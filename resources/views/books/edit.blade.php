@@ -8,6 +8,8 @@
 
     <h1>Edit book {{ $book->title}}</h1>
 
+    <a href='/book/show/{{$book->id}}'><i class='fa fa-eye'></i> View</a><br>
+    
     <form method='POST' action='/book/edit'>
 
         <input type='hidden'  name='id'  value='{{$book->id}}'>

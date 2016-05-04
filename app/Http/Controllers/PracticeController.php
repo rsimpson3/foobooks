@@ -10,6 +10,50 @@ use Illuminate\Http\Request;
 class PracticeController extends Controller
 {
 
+    # test Cookies & Session information
+    // public function getEx26() {
+    //
+    //     # Log in check
+    //     if(\Auth::check())
+    //         echo "<h1>You are logged in: ".\Auth::user()."</h1>";
+    //     else
+    //         echo "<h1>You are not logged in.</h1>";
+    //
+    //     # Cookies
+    //     echo "<h1>Your Raw, encrypted Cookies</h1>";
+    //     echo dump($_COOKIE);
+    //
+    //     # Decrypted cookies
+    //     echo "<h1>Your Decrypted Cookies</h1>";
+    //     echo dump(\Cookie::get());
+    //
+    //     # All Session files
+    //     echo "<h1>All Session Files</h1>";
+    //     $files = \File::files(storage_path().'/framework/sessions');
+    //
+    //     foreach($files as $file) {
+    //         if(strstr($file,\Cookie::get('laravel_session'))) {
+    //             echo "<div style='background-color:yellow'><strong>YOUR SESSION FILE:</strong><br>";
+    //         }
+    //         else {
+    //             echo "<div>";
+    //         }
+    //         echo "<strong>".$file."</strong>:<br>".\File::get($file)."<br>";
+    //         echo "</div>";
+    //     }
+    //
+    //     # Your Session Data
+    //     $data = \Session::all();
+    //     echo "<h1>Your Session Data</h1>";
+    //     echo dump($data);
+    //
+    //     # Token
+    //     echo "<h1>Your CSRF Token</h1>";
+    //     echo csrf_token();
+    //     echo "<script>document.querySelector('[name=_token]').type='text'</script>";
+    //
+    // }
+
     public function getEx25() {
 
         # Instantiate a new object from the library we're using

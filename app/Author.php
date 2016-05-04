@@ -17,9 +17,11 @@ class Author extends Model
 
         # Get all authors
         $authors = \App\Author::orderBy('last_name','asc')->get();
-        
+
         # Build array for authors dropdown
         $authors_for_dropdown = [];
+        # adds new dropdown item 
+        $authors_for_dropdown[0] = 'Choose an author...';
 
         # key = author_id
         # values = last_name, first_name

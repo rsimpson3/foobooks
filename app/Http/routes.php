@@ -34,7 +34,7 @@ Route::get('/show-login-status', function() {
 # ----------------------------------------
 # Book specific Routes
 # ----------------------------------------
-Route::get('/', 'BookController@getIndex');
+Route::get('/', 'WelcomeController@getIndex'); # Home
 Route::get('/books', 'BookController@getIndex');
 
 # Group routes under auth method - uses array
@@ -45,10 +45,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/book/create', 'BookController@getCreate');
     Route::post('/book/create', 'BookController@postCreate');
 
+    Route::get('/book/confirm-delete/{id?}', 'BookController@getConfirmDelete');
+    Route::get('/book/delete/{id?}', 'BookController@getDelete');
+
+    Route::get('/book/show/{id?}', 'BookController@getShow');
+
 });
-
-
-Route::get('/book/show/{title?}', 'BookController@getShow');
 
 Route::get('/practice',function() {
 
@@ -86,6 +88,9 @@ Route::get('/practice/ex23', 'PracticeController@getEx23');
 # API
 Route::get('/practice/ex24', 'PracticeController@getEx24');
 Route::get('/practice/ex25', 'PracticeController@getEx25');
+
+# Cookies & sessions
+Route::get('/practice/ex26', 'PracticeController@getEx26');
 
 # Restrict certain routes to only be viewable in the local environments
 if(App::environment('local')) {

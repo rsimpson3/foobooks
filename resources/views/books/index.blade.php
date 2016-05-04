@@ -30,6 +30,10 @@
                             <div class='tag'>{{ $tag->name }}</div>
                         @endforeach
                     </div>
+
+                    <a href='/book/edit/{{$book->id}}'><i class='fa fa-pencil'></i> Edit</a><br>
+                    <a href='/book/show/{{$book->id}}'><i class='fa fa-eye'></i> View</a><br>
+                    
             </section>
         @endforeach
         </div>
